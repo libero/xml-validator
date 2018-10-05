@@ -14,7 +14,7 @@ class ValidationFailed extends UnexpectedValueException
     /**
      * @param ValidationFailure[] $failures
      */
-    public function __construct(array $failures, string $message = '', int $code = 0, Throwable $previous = null)
+    public function __construct(array $failures, string $message = '', int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
 
