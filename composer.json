@@ -20,7 +20,7 @@
     "require-dev": {
         "libero/coding-standard": "^0.2",
         "phpstan/phpstan": "^0.10",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^7.2"
     },
     "suggest": {
         "ext-xsl": "To use SchematronValidator"
