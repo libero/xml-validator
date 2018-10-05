@@ -22,9 +22,6 @@
         "phpstan/phpstan": "^0.10",
         "phpunit/phpunit": "^7.2"
     },
-    "suggest": {
-        "ext-xsl": "To use SchematronValidator"
-    },
     "config": {
         "sort-packages": true
     },
