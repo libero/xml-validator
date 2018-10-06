@@ -14,6 +14,18 @@ Using [Composer](https://getcomposer.org/) you can install the coding standard i
 composer require libero/xml-validator
 ```
 
+The core of this library is the [`XmlValidator`](src/XmlValidator.php) interface, which can be used to test the validity of a [`DOMDocument`](https://php.net/DOMDocument).
+
+### Implementations
+
+#### [`ChainedValidator`](src/ChainedValidator.php)
+
+Runs multiple validators and combines their results.
+
+#### [`DummyValidator`](src/DummyValidator.php)
+
+Always produces the configured result. Useful for testing.
+
 Getting help
 ------------
 
