@@ -43,4 +43,26 @@ final class ChainedValidatorTest extends TestCase
             $this->assertEquals([$failure1, $failure2, $failure3], $e->getFailures());
         }
     }
+
+    /**
+     * @test
+     */
+    public function it_chains_validators_with_mixed_results() : void
+    {
+        $failure1 = new ValidationFailure('failure 1', 1);
+        $failure2 = new ValidationFailure('failure 2', 2);
+
+        $validator = new ChainedValidator(
+            new DummyValidator($failure1),
+            new DummyValidator(),
+            new DummyValidator($failure2)
+        );
+
+        try {
+            $validator->validate(new DOMDocument());
+            $this->fail('Validation passed but it should not have');
+        } catch (ValidationFailed $e) {
+            $this->assertEquals([$failure1, $failure2], $e->getFailures());
+        }
+    }
 }
