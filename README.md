@@ -1,5 +1,5 @@
 PHP XML Validator
-==========================
+=================
 
 [![Build Status](https://travis-ci.com/libero/xml-validator.svg?branch=master)](https://travis-ci.com/libero/xml-validator)
 
