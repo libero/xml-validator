@@ -26,7 +26,7 @@ final class ValidationFailedTest extends TestCase
      */
     public function it_has_failures() : void
     {
-        $failures = [new Failure('', 0)];
+        $failures = [new Failure('failure')];
 
         $failed = new ValidationFailed($failures);
 
