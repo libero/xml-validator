@@ -7,7 +7,7 @@ namespace Libero\XmlValidator;
 use DOMDocument;
 use function array_merge;
 
-final class ChainedValidator implements XmlValidator
+final class CompositeValidator implements XmlValidator
 {
     private $validators;
 

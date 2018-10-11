@@ -18,7 +18,7 @@ The core of this library is the [`XmlValidator`](src/XmlValidator.php) interface
 
 ### Implementations
 
-#### [`ChainedValidator`](src/ChainedValidator.php)
+#### [`CompositeValidator`](src/CompositeValidator.php)
 
 Runs multiple validators and combines their results.
 

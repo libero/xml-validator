@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace tests\Libero\XmlValidator;
 
 use DOMDocument;
-use Libero\XmlValidator\ChainedValidator;
+use Libero\XmlValidator\CompositeValidator;
 use Libero\XmlValidator\DummyValidator;
 use Libero\XmlValidator\ValidationFailed;
 use Libero\XmlValidator\ValidationFailure;
 use PHPUnit\Framework\TestCase;
 
-final class ChainedValidatorTest extends TestCase
+final class CompositeValidatorTest extends TestCase
 {
     /**
      * @test
      */
-    public function it_chains_validators_without_failures() : void
+    public function it_composes_validators_without_failures() : void
     {
-        $validator = new ChainedValidator(new DummyValidator(), new DummyValidator());
+        $validator = new CompositeValidator(new DummyValidator(), new DummyValidator());
 
         $this->expectNotToPerformAssertions();
 
@@ -28,13 +28,13 @@ final class ChainedValidatorTest extends TestCase
     /**
      * @test
      */
-    public function it_chains_validators_with_failures() : void
+    public function it_composes_validators_with_failures() : void
     {
         $failure1 = new ValidationFailure('failure 1', 1);
         $failure2 = new ValidationFailure('failure 2', 2);
         $failure3 = new ValidationFailure('failure 3', 3);
 
-        $validator = new ChainedValidator(new DummyValidator($failure1, $failure2), new DummyValidator($failure3));
+        $validator = new CompositeValidator(new DummyValidator($failure1, $failure2), new DummyValidator($failure3));
 
         try {
             $validator->validate(new DOMDocument());
@@ -47,12 +47,12 @@ final class ChainedValidatorTest extends TestCase
     /**
      * @test
      */
-    public function it_chains_validators_with_mixed_results() : void
+    public function it_composes_validators_with_mixed_results() : void
     {
         $failure1 = new ValidationFailure('failure 1', 1);
         $failure2 = new ValidationFailure('failure 2', 2);
 
-        $validator = new ChainedValidator(
+        $validator = new CompositeValidator(
             new DummyValidator($failure1),
             new DummyValidator(),
             new DummyValidator($failure2)
