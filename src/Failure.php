@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Libero\XmlValidator;
 
-final class ValidationFailure
+final class Failure
 {
     private $message;
     private $line;
 
-    public function __construct(string $message, int $line)
+    public function __construct(string $message, ?int $line = null)
     {
         $this->message = $message;
         $this->line = $line;
@@ -20,7 +20,7 @@ final class ValidationFailure
         return $this->message;
     }
 
-    public function getLine() : int
+    public function getLine() : ?int
     {
         return $this->line;
     }

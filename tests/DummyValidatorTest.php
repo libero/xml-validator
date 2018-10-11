@@ -6,8 +6,8 @@ namespace tests\Libero\XmlValidator;
 
 use DOMDocument;
 use Libero\XmlValidator\DummyValidator;
+use Libero\XmlValidator\Failure;
 use Libero\XmlValidator\ValidationFailed;
-use Libero\XmlValidator\ValidationFailure;
 use PHPUnit\Framework\TestCase;
 
 final class DummyValidatorTest extends TestCase
@@ -29,8 +29,8 @@ final class DummyValidatorTest extends TestCase
      */
     public function it_may_failure() : void
     {
-        $failure1 = new ValidationFailure('failure 1', 1);
-        $failure2 = new ValidationFailure('failure 2', 2);
+        $failure1 = new Failure('failure 1', 1);
+        $failure2 = new Failure('failure 2');
 
         $validator = new DummyValidator($failure1, $failure2);
 

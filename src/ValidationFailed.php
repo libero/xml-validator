@@ -12,7 +12,7 @@ class ValidationFailed extends UnexpectedValueException
     private $failures;
 
     /**
-     * @param ValidationFailure[] $failures
+     * @param Failure[] $failures
      */
     public function __construct(array $failures, string $message = '', int $code = 0, ?Throwable $previous = null)
     {
@@ -22,7 +22,7 @@ class ValidationFailed extends UnexpectedValueException
     }
 
     /**
-     * @return ValidationFailure[]
+     * @return Failure[]
      */
     public function getFailures() : array
     {

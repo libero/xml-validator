@@ -10,7 +10,7 @@ final class DummyValidator implements XmlValidator
 {
     private $failures;
 
-    public function __construct(ValidationFailure ...$failures)
+    public function __construct(Failure ...$failures)
     {
         $this->failures = $failures;
     }

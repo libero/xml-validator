@@ -7,8 +7,8 @@ namespace tests\Libero\XmlValidator;
 use DOMDocument;
 use Libero\XmlValidator\CompositeValidator;
 use Libero\XmlValidator\DummyValidator;
+use Libero\XmlValidator\Failure;
 use Libero\XmlValidator\ValidationFailed;
-use Libero\XmlValidator\ValidationFailure;
 use PHPUnit\Framework\TestCase;
 
 final class CompositeValidatorTest extends TestCase
@@ -30,9 +30,9 @@ final class CompositeValidatorTest extends TestCase
      */
     public function it_composes_validators_with_failures() : void
     {
-        $failure1 = new ValidationFailure('failure 1', 1);
-        $failure2 = new ValidationFailure('failure 2', 2);
-        $failure3 = new ValidationFailure('failure 3', 3);
+        $failure1 = new Failure('failure 1', 1);
+        $failure2 = new Failure('failure 2', 2);
+        $failure3 = new Failure('failure 3');
 
         $validator = new CompositeValidator(new DummyValidator($failure1, $failure2), new DummyValidator($failure3));
 
@@ -49,8 +49,8 @@ final class CompositeValidatorTest extends TestCase
      */
     public function it_composes_validators_with_mixed_results() : void
     {
-        $failure1 = new ValidationFailure('failure 1', 1);
-        $failure2 = new ValidationFailure('failure 2', 2);
+        $failure1 = new Failure('failure 1', 1);
+        $failure2 = new Failure('failure 2');
 
         $validator = new CompositeValidator(
             new DummyValidator($failure1),

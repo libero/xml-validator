@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace tests\Libero\XmlValidator;
 
+use Libero\XmlValidator\Failure;
 use Libero\XmlValidator\ValidationFailed;
-use Libero\XmlValidator\ValidationFailure;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
@@ -26,7 +26,7 @@ final class ValidationFailedTest extends TestCase
      */
     public function it_has_failures() : void
     {
-        $failures = [new ValidationFailure('', 0)];
+        $failures = [new Failure('', 0)];
 
         $failed = new ValidationFailed($failures);
 
