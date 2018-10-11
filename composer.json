@@ -15,7 +15,8 @@
     },
     "require": {
         "php": "^7.2",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "libero/coding-standard": "^0.2",
