@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Libero\XmlValidator;
 
+use LibXMLError;
+use function trim;
+
 final class Failure
 {
     private $message;
@@ -13,6 +16,14 @@ final class Failure
     {
         $this->message = $message;
         $this->line = $line;
+    }
+
+    public static function fromLibXmlError(LibXMLError $error) : Failure
+    {
+        return new Failure(
+            trim($error->message),
+            $error->line ?? null
+        );
     }
 
     public function getMessage() : string

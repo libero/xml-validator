@@ -26,6 +26,10 @@ Runs multiple validators and combines their results.
 
 Always produces the configured result. Useful for testing.
 
+#### [`XmlSchemaValidator`](src/XmlSchemaValidator.php)
+
+Validates against an XML Schema Definition (XSD).
+
 Getting help
 ------------
 
