@@ -30,6 +30,10 @@ Validates against the Document Type Definition (DTD).
 
 Always produces the configured result. Useful for testing.
 
+#### [`RelaxNgValidator`](src/RelaxNgValidator.php)
+
+Validates against a RELAX NG schema.
+
 Getting help
 ------------
 
