@@ -26,6 +26,10 @@ Runs multiple validators and combines their results.
 
 Always produces the configured result. Useful for testing.
 
+#### [`RelaxNgValidator`](src/RelaxNgValidator.php)
+
+Validates against a RELAX NG schema.
+
 Getting help
 ------------
 
