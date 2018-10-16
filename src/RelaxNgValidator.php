@@ -6,7 +6,7 @@ namespace Libero\XmlValidator;
 
 use DOMDocument;
 
-final class XmlSchemaValidator implements XmlValidator
+final class RelaxNgValidator implements XmlValidator
 {
     use LibXmlValidator;
 
@@ -19,6 +19,6 @@ final class XmlSchemaValidator implements XmlValidator
 
     protected function doValidation(DOMDocument $document) : void
     {
-        @$document->schemaValidate($this->schema);
+        @$document->relaxNGValidate($this->schema);
     }
 }

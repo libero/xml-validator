@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<grammar ns="http://example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+
+    <start>
+        <element name="parent">
+            <oneOrMore>
+                <element name="child">
+                    <text/>
+                </element>
+            </oneOrMore>
+        </element>
+    </start>
+
+</grammar>
