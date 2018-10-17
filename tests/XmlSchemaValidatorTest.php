@@ -59,7 +59,9 @@ final class XmlSchemaValidatorTest extends TestCase
      */
     public function it_fails_if_the_schema_does_not_exist() : void
     {
-        $validator = new XmlSchemaValidator(__DIR__.'/fixtures/not-a-schema.xsd');
+        $xsd = __DIR__.'/fixtures/not-a-schema.xsd';
+
+        $validator = new XmlSchemaValidator($xsd);
 
         $document = new DOMDocument();
         $document->load(__DIR__.'/fixtures/valid.xml');
@@ -68,7 +70,6 @@ final class XmlSchemaValidatorTest extends TestCase
             $validator->validate($document);
             $this->fail('Validation passed but it should not have');
         } catch (ValidationFailed $e) {
-            $xsd = __DIR__.'/fixtures/not-a-schema.xsd';
             $this->assertEquals(
                 [
                     new Failure("failed to load external entity \"{$xsd}\""),

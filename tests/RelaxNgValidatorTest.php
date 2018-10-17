@@ -55,7 +55,9 @@ final class RelaxNgValidatorTest extends TestCase
      */
     public function it_fails_if_the_schema_does_not_exist() : void
     {
-        $validator = new RelaxNgValidator(__DIR__.'/fixtures/not-a-schema.rng');
+        $rng = __DIR__.'/fixtures/not-a-schema.rng';
+
+        $validator = new RelaxNgValidator($rng);
 
         $document = new DOMDocument();
         $document->load(__DIR__.'/fixtures/valid.xml');
@@ -66,8 +68,8 @@ final class RelaxNgValidatorTest extends TestCase
         } catch (ValidationFailed $e) {
             $this->assertEquals(
                 [
-                    new Failure('failed to load external entity "'.__DIR__.'/fixtures/not-a-schema.rng"'),
-                    new Failure('xmlRelaxNGParse: could not load '.__DIR__.'/fixtures/not-a-schema.rng'),
+                    new Failure("failed to load external entity \"{$rng}\""),
+                    new Failure("xmlRelaxNGParse: could not load {$rng}"),
                 ],
                 $e->getFailures()
             );
