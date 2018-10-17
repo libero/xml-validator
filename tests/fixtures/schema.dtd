@@ -1,0 +1,7 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT parent (child)+>
+<!ATTLIST parent xmlns CDATA #FIXED 'http://example.com'>
+
+<!ELEMENT child (#PCDATA)>
+<!ATTLIST child xmlns CDATA #FIXED 'http://example.com'>
