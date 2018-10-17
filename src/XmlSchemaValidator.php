@@ -10,15 +10,15 @@ final class XmlSchemaValidator implements XmlValidator
 {
     use LibXmlValidator;
 
-    private $schema;
+    private $schemaPath;
 
-    public function __construct(string $schema)
+    public function __construct(string $schemaPath)
     {
-        $this->schema = $schema;
+        $this->schemaPath = $schemaPath;
     }
 
     protected function doValidation(DOMDocument $document) : void
     {
-        @$document->schemaValidate($this->schema);
+        @$document->schemaValidate($this->schemaPath);
     }
 }
