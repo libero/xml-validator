@@ -22,6 +22,10 @@ The core of this library is the [`XmlValidator`](src/XmlValidator.php) interface
 
 Runs multiple validators and combines their results.
 
+#### [`DtdValidator`](src/DtdValidator.php)
+
+Validates against the Document Type Definition (DTD).
+
 #### [`DummyValidator`](src/DummyValidator.php)
 
 Always produces the configured result. Useful for testing.

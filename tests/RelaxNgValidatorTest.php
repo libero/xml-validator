@@ -43,7 +43,7 @@ final class RelaxNgValidatorTest extends TestCase
         } catch (ValidationFailed $e) {
             $this->assertEquals(
                 [
-                    new Failure('Expecting an element , got nothing', 3),
+                    new Failure('Expecting an element , got nothing', 4),
                 ],
                 $e->getFailures()
             );
