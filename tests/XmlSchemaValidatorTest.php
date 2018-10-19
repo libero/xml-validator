@@ -6,18 +6,18 @@ namespace tests\Libero\XmlValidator;
 
 use DOMDocument;
 use Libero\XmlValidator\Failure;
-use Libero\XmlValidator\RelaxNgValidator;
 use Libero\XmlValidator\ValidationFailed;
+use Libero\XmlValidator\XmlSchemaValidator;
 use PHPUnit\Framework\TestCase;
 
-final class RelaxNgValidatorTest extends TestCase
+final class XmlSchemaValidatorTest extends TestCase
 {
     /**
      * @test
      */
     public function it_passes_on_valid() : void
     {
-        $validator = new RelaxNgValidator(__DIR__.'/fixtures/schema.rng');
+        $validator = new XmlSchemaValidator(__DIR__.'/fixtures/schema.xsd');
 
         $document = new DOMDocument();
         $document->load(__DIR__.'/fixtures/valid.xml');
@@ -32,7 +32,7 @@ final class RelaxNgValidatorTest extends TestCase
      */
     public function it_fails_on_invalid() : void
     {
-        $validator = new RelaxNgValidator(__DIR__.'/fixtures/schema.rng');
+        $validator = new XmlSchemaValidator(__DIR__.'/fixtures/schema.xsd');
 
         $document = new DOMDocument();
         $document->load(__DIR__.'/fixtures/invalid-empty-parent.xml');
@@ -43,7 +43,11 @@ final class RelaxNgValidatorTest extends TestCase
         } catch (ValidationFailed $e) {
             $this->assertEquals(
                 [
-                    new Failure('Expecting an element , got nothing', 4),
+                    new Failure(
+                        'Element \'{http://example.com}parent\': Missing child element(s). Expected is'.
+                        ' ( {http://example.com}child ).',
+                        4
+                    ),
                 ],
                 $e->getFailures()
             );
@@ -55,9 +59,9 @@ final class RelaxNgValidatorTest extends TestCase
      */
     public function it_fails_if_the_schema_does_not_exist() : void
     {
-        $rng = __DIR__.'/fixtures/not-a-schema.rng';
+        $xsd = __DIR__.'/fixtures/not-a-schema.xsd';
 
-        $validator = new RelaxNgValidator($rng);
+        $validator = new XmlSchemaValidator($xsd);
 
         $document = new DOMDocument();
         $document->load(__DIR__.'/fixtures/valid.xml');
@@ -68,8 +72,8 @@ final class RelaxNgValidatorTest extends TestCase
         } catch (ValidationFailed $e) {
             $this->assertEquals(
                 [
-                    new Failure("failed to load external entity \"{$rng}\""),
-                    new Failure("xmlRelaxNGParse: could not load {$rng}"),
+                    new Failure("failed to load external entity \"{$xsd}\""),
+                    new Failure("Failed to locate the main schema resource at '{$xsd}'."),
                 ],
                 $e->getFailures()
             );

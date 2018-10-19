@@ -34,6 +34,10 @@ Always produces the configured result. Useful for testing.
 
 Validates against a RELAX NG schema.
 
+#### [`XmlSchemaValidator`](src/XmlSchemaValidator.php)
+
+Validates against an XML Schema Definition (XSD).
+
 Getting help
 ------------
 
