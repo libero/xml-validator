@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<grammar ns="http://example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+<grammar ns="http://example.com" xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+
+    <sch:ns prefix="example" uri="http://example.com"/>
 
     <start>
         <element name="parent">
             <oneOrMore>
                 <element name="child">
                     <text/>
+                    <sch:pattern>
+                        <sch:rule context="example:child">
+                            <sch:assert test="* or normalize-space()">
+                                Must not be empty
+                            </sch:assert>
+                        </sch:rule>
+                    </sch:pattern>
                 </element>
             </oneOrMore>
         </element>

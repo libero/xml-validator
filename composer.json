@@ -19,10 +19,15 @@
         "ext-libxml": "*"
     },
     "require-dev": {
+        "ext-xsl": "*",
         "libero/coding-standard": "^0.2",
         "phpstan/phpstan": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",
-        "phpunit/phpunit": "^7.2"
+        "phpunit/phpunit": "^7.2",
+        "symfony/filesystem": "^4.0"
+    },
+    "suggest": {
+        "ext-xsl": "To use SchematronValidator"
     },
     "config": {
         "sort-packages": true
