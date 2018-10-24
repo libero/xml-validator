@@ -11,12 +11,17 @@ use UnexpectedValueException;
 use XSLTProcessor;
 use function array_map;
 use function iterator_to_array;
+use function sprintf;
 use function trim;
 use const LIBXML_BIGLINES;
 
 final class SchematronValidator implements XmlValidator
 {
     private const LIB_PATH = __DIR__.'/../lib/schematron';
+    private const SVRL_URI = 'http://purl.oclc.org/dsdl/svrl';
+    private const SCHEMATRON_DOCUMENT_ELEMENT = '{http://purl.oclc.org/dsdl/schematron}schema';
+    private const RELAX_NG_DOCUMENT_ELEMENT = '{http://relaxng.org/ns/structure/1.0}grammar';
+    private const XML_SCHEMA_DOCUMENT_ELEMENT = '{http://www.w3.org/2001/XMLSchema}schema';
 
     private $schema;
 
@@ -51,7 +56,7 @@ final class SchematronValidator implements XmlValidator
         $result = $processor->transformToDoc($document);
 
         $resultXpath = new DOMXPath($result);
-        $resultXpath->registerNamespace('svrl', 'http://purl.oclc.org/dsdl/svrl');
+        $resultXpath->registerNamespace('svrl', self::SVRL_URI);
         $documentXpath = new DOMXPath($document);
 
         $failures = array_map(
@@ -71,14 +76,28 @@ final class SchematronValidator implements XmlValidator
 
     private function toSchematron(XSLTProcessor $processor, DOMDocument $schema) : DOMDocument
     {
-        $documentElement = "{{$schema->documentElement->namespaceURI}}{$schema->documentElement->nodeName}";
+        $documentElement = sprintf(
+            '{%s}%s',
+            $schema->documentElement->namespaceURI,
+            $schema->documentElement->nodeName
+        );
 
-        if ('{http://purl.oclc.org/dsdl/schematron}schema' === $documentElement) {
+        if (self::SCHEMATRON_DOCUMENT_ELEMENT === $documentElement) {
             return $schema;
         }
 
+        try {
+            $extractorXslt = $this->getExtractor($documentElement);
+        } catch (UnexpectedValueException $e) {
+            throw new UnexpectedValueException(
+                "Schema is not Schematron, nor can it be extracted: document element is {$documentElement}",
+                0,
+                $e
+            );
+        }
+
         $extractor = new DOMDocument();
-        $extractor->load($this->getExtractor($documentElement), LIBXML_BIGLINES);
+        $extractor->load($extractorXslt, LIBXML_BIGLINES);
 
         $processor->importStylesheet($extractor);
 
@@ -88,14 +107,14 @@ final class SchematronValidator implements XmlValidator
     private function getExtractor(string $documentElement) : string
     {
         switch ($documentElement) {
-            case '{http://relaxng.org/ns/structure/1.0}grammar':
+            case self::RELAX_NG_DOCUMENT_ELEMENT:
                 return self::LIB_PATH.'/ExtractSchFromRNG.xsl';
-            case '{http://www.w3.org/2001/XMLSchema}schema':
+            case self::XML_SCHEMA_DOCUMENT_ELEMENT:
                 return self::LIB_PATH.'/ExtractSchFromXSD.xsl';
         }
 
         throw new UnexpectedValueException(
-            "Schema appears not to be Schematron, an XSD, nor RNG: document element is {$documentElement}"
+            "Schema appears not to be an XSD nor RNG: document element is {$documentElement}"
         );
     }
 }

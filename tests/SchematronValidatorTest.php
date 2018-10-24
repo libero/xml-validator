@@ -99,7 +99,7 @@ final class SchematronValidatorTest extends TestCase
         $document->load(__DIR__.'/fixtures/valid.xml');
 
         $this->expectException(UnexpectedValueException::class);
-        $this->expectExceptionMessage('Schema appears not to be Schematron, an XSD, nor RNG: document element is '.
+        $this->expectExceptionMessage('Schema is not Schematron, nor can it be extracted: document element is '.
             '{http://example.com}parent');
 
         $validator->validate($document);
