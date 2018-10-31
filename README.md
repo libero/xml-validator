@@ -41,5 +41,6 @@ Validates against an XML Schema Definition (XSD).
 Getting help
 ------------
 
--  Report a bug or request a feature on [GitHub](https://github.com/libero/libero/issues/new/choose).
--  Ask a question on the [Libero Community Slack](https://libero-community.slack.com/).
+- Report a bug or request a feature on [GitHub](https://github.com/libero/libero/issues/new/choose).
+- Ask a question on the [Libero Community Slack](https://libero-community.slack.com/).
+
