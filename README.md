@@ -34,6 +34,10 @@ Always produces the configured result. Useful for testing.
 
 Validates against a RELAX NG schema.
 
+#### [`SchematronValidator`](src/SchematronValidator.php)
+
+Validates against Schematron (using XSLT 1.0), which may be embedded inside a RELAX NG schema or an XML Schema Definition.
+
 #### [`XmlSchemaValidator`](src/XmlSchemaValidator.php)
 
 Validates against an XML Schema Definition (XSD).

@@ -11,6 +11,7 @@
 
     <rule ref="Libero"/>
 
+    <file>bin/</file>
     <file>src/</file>
     <file>tests/</file>
 

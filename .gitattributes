@@ -1,2 +1,4 @@
 /*.* export-ignore
+/bin export-ignore
+/lib/schematron/* linguist-vendored
 /tests export-ignore
