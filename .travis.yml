@@ -20,18 +20,18 @@ jobs:
     include:
 
         - stage: Test
-          env: DEPENDENCIES=low
+          name: Lowest dependency versions
           php: 7.2
           install:
               - travis_retry composer update --classmap-authoritative --no-suggest  --prefer-dist --prefer-lowest --prefer-stable
 
         - stage: Code Quality
-          env: CODING_STANDARDS
+          name: Coding standards
           script:
               - vendor/bin/phpcs -p
 
         - stage: Code Quality
-          env: STATIC_ANALYSIS
+          name: Static analysis
           script:
               - vendor/bin/phpstan analyse
 
