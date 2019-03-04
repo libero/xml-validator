@@ -3,6 +3,6 @@
 
 <parent xmlns="http://example.com">
 
-    <child> </child>
+    <child attribute=" "> </child>
 
 </parent>

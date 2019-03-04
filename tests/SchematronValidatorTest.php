@@ -50,9 +50,14 @@ final class SchematronValidatorTest extends TestCase
             $this->assertEquals(
                 [
                     new Failure(
-                        'Must not be empty',
+                        'Element must not be empty',
                         6,
                         $xpath->query('/example:parent/example:child')->item(0)
+                    ),
+                    new Failure(
+                        'Attribute must not be empty',
+                        6,
+                        $xpath->query('/example:parent/example:child/@attribute')->item(0)
                     ),
                 ],
                 $e->getFailures()

@@ -12,18 +12,32 @@
     <element name="parent">
         <complexType>
             <sequence>
-                <element name="child" type="string">
+                <element name="child">
                     <annotation>
                         <appinfo>
                             <sch:pattern>
                                 <sch:rule context="example:child">
                                     <sch:assert test="* or normalize-space()">
-                                        Must not be empty
+                                        Element must not be empty
+                                    </sch:assert>
+                                </sch:rule>
+                            </sch:pattern>
+                            <sch:pattern>
+                                <sch:rule context="example:child/@attribute">
+                                    <sch:assert test="* or normalize-space()" subject="..">
+                                        Attribute must not be empty
                                     </sch:assert>
                                 </sch:rule>
                             </sch:pattern>
                         </appinfo>
                     </annotation>
+                    <complexType>
+                        <simpleContent>
+                            <extension base="string">
+                                <attribute name="attribute" type="string"/>
+                            </extension>
+                        </simpleContent>
+                    </complexType>
                 </element>
             </sequence>
         </complexType>
