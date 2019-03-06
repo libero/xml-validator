@@ -17,7 +17,7 @@ $repoDir = __DIR__.'/../tmp/schematron';
 $patchesDir = __DIR__.'/../tmp/patches';
 $targetDir = __DIR__.'/../lib/schematron';
 $patches = [
-    'https://github.com/Schematron/schematron/pull/81.patch',
+    'https://github.com/Schematron/schematron/pull/81.patch', // Fixes attribute paths.
 ];
 $files = [
     'LICENSE',
