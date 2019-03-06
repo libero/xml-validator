@@ -32,7 +32,7 @@ if (!$filesystem->exists($repoDir)) {
     $repo = $git->cloneRepository($repoUri, $repoDir, ['depth' => 1]);
 } else {
     $repo = $git->workingCopy($repoDir);
-    $repo->fetch('origin', 'master');
+    $repo->fetch('origin', 'master', ['depth' => 1]);
     $repo->reset(['hard' => true], 'origin/master');
 }
 
