@@ -20,6 +20,7 @@
     },
     "require-dev": {
         "ext-xsl": "*",
+        "cpliakas/git-wrapper": "^2.0",
         "libero/coding-standard": "^0.3",
         "phpstan/phpstan": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",

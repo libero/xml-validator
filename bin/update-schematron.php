@@ -3,15 +3,22 @@
 
 declare(strict_types=1);
 
+use GitWrapper\GitWrapper;
 use Symfony\Component\Filesystem\Filesystem;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
 $filesystem = new Filesystem();
+$git = new GitWrapper();
+$git->streamOutput();
 
-$target = __DIR__.'/../lib/schematron';
-
-$base = 'https://github.com/Schematron/schematron/raw/master';
+$repoUri = 'https://github.com/Schematron/schematron';
+$repoDir = __DIR__.'/../tmp/schematron';
+$patchesDir = __DIR__.'/../tmp/patches';
+$targetDir = __DIR__.'/../lib/schematron';
+$patches = [
+    'https://github.com/Schematron/schematron/pull/81.patch', // Fixes attribute paths.
+];
 $files = [
     'LICENSE',
     'trunk/schematron/code/iso_schematron_skeleton_for_xslt1.xsl',
@@ -20,8 +27,29 @@ $files = [
     'trunk/converters/code/ToSchematron/ExtractSchFromXSD.xsl',
 ];
 
-$filesystem->remove(new FilesystemIterator($target));
+if (!$filesystem->exists($repoDir)) {
+    $filesystem->mkdir($repoDir);
+    $repo = $git->cloneRepository($repoUri, $repoDir, ['depth' => 1]);
+} else {
+    $repo = $git->workingCopy($repoDir);
+    $repo->fetch('origin', 'master', ['depth' => 1]);
+    $repo->reset(['hard' => true], 'origin/master');
+}
+
+foreach ($patches as $patch) {
+    $patchTarget = "${patchesDir}/".md5($patch);
+
+    echo "Downloading {$patch} to {$patchTarget}\n";
+    $filesystem->copy($patch, $patchTarget);
+    $repo->apply($patchTarget, ['verbose' => true]);
+}
+
+$filesystem->remove(new FilesystemIterator($targetDir));
 
 foreach ($files as $file) {
-    $filesystem->copy("{$base}/${file}", "{$target}/".basename($file));
+    $origin = "${repoDir}/${file}";
+    $target = "${targetDir}/".basename($file);
+
+    echo "Copying {$origin} to {$target}\n";
+    $filesystem->copy($origin, $target);
 }

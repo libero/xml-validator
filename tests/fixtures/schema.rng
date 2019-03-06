@@ -10,10 +10,20 @@
             <oneOrMore>
                 <element name="child">
                     <text/>
+                    <optional>
+                        <attribute name="attribute"/>
+                    </optional>
                     <sch:pattern>
                         <sch:rule context="example:child">
                             <sch:assert test="* or normalize-space()">
-                                Must not be empty
+                                Element must not be empty
+                            </sch:assert>
+                        </sch:rule>
+                    </sch:pattern>
+                    <sch:pattern>
+                        <sch:rule context="example:child/@attribute">
+                            <sch:assert test="* or normalize-space()" subject="..">
+                                Attribute must not be empty
                             </sch:assert>
                         </sch:rule>
                     </sch:pattern>

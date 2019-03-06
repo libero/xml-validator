@@ -7,7 +7,14 @@
     <pattern>
         <rule context="example:child">
             <assert test="* or normalize-space()">
-                Must not be empty
+                Element must not be empty
+            </assert>
+        </rule>
+    </pattern>
+    <pattern>
+        <rule context="example:child/@attribute">
+            <assert test="* or normalize-space()">
+                Attribute must not be empty
             </assert>
         </rule>
     </pattern>

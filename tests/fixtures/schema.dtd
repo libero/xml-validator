@@ -4,4 +4,7 @@
 <!ATTLIST parent xmlns CDATA #FIXED 'http://example.com'>
 
 <!ELEMENT child (#PCDATA)>
-<!ATTLIST child xmlns CDATA #FIXED 'http://example.com'>
+<!ATTLIST child
+    xmlns CDATA #FIXED 'http://example.com'
+    attribute CDATA #IMPLIED
+>
