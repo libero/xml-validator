@@ -3,17 +3,19 @@
 
 declare(strict_types=1);
 
-use Gitonomy\Git;
+use GitWrapper\GitWrapper;
 use Symfony\Component\Filesystem\Filesystem;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
 $filesystem = new Filesystem();
+$git = new GitWrapper();
+$git->streamOutput();
 
-$repo = 'https://github.com/Schematron/schematron';
+$repoUri = 'https://github.com/Schematron/schematron';
 $repoDir = __DIR__.'/../tmp/schematron';
 $patchesDir = __DIR__.'/../tmp/patches';
-$target = __DIR__.'/../lib/schematron';
+$targetDir = __DIR__.'/../lib/schematron';
 $patches = [
     'https://github.com/Schematron/schematron/pull/81.patch',
 ];
@@ -26,24 +28,28 @@ $files = [
 ];
 
 if (!$filesystem->exists($repoDir)) {
-    $filesystem->mkdir(dirname($repoDir));
-    Git\Admin::cloneTo($repoDir, $repo, false);
+    $filesystem->mkdir($repoDir);
+    $repo = $git->cloneRepository($repoUri, $repoDir, ['depth' => 1]);
+} else {
+    $repo = $git->workingCopy($repoDir);
+    $repo->fetch('origin', 'master');
+    $repo->reset(['hard' => true], 'origin/master');
 }
-
-$repository = new Git\Repository($repoDir);
-
-$repository->run('fetch', ['origin', 'master']);
-$repository->run('reset', ['--hard', 'origin/master']);
 
 foreach ($patches as $patch) {
     $patchTarget = "${patchesDir}/".md5($patch);
 
+    echo "Downloading {$patch} to {$patchTarget}\n";
     $filesystem->copy($patch, $patchTarget);
-    $repository->run('am', [$patchTarget]);
+    $repo->apply($patchTarget, ['verbose' => true]);
 }
 
-$filesystem->remove(new FilesystemIterator($target));
+$filesystem->remove(new FilesystemIterator($targetDir));
 
 foreach ($files as $file) {
-    $filesystem->copy("${repoDir}/${file}", "${target}/".basename($file));
+    $origin = "${repoDir}/${file}";
+    $target = "${targetDir}/".basename($file);
+
+    echo "Copying {$origin} to {$target}\n";
+    $filesystem->copy($origin, $target);
 }
